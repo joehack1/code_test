@@ -1,0 +1,17 @@
+┌─────────────────────────────────────────┐
+│   Frontend (React/Next.js)              │
+│   - Game UI                             │
+│   - Code Editor (Monaco)                │
+│   - Live Preview                        │
+│   - Visual Diff Display                 │
+├─────────────────────────────────────────┤
+│   Comparison Engine (Browser/Edge)      │
+│   - Parse HTML/CSS                      │
+│   - Calculate similarity %              │
+│   - Highlight differences               │
+├─────────────────────────────────────────┤
+│   Backend (Optional)                    │
+│   - User authentication                 │
+│   - Save progress                       │
+│   - Leaderboards                        │
+└─────────────────────────────────────────┘
