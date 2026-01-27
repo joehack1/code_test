@@ -44,24 +44,27 @@ Improve: Review differences and refine your code
 Advance: Achieve 90%+ accuracy to unlock next challenge
 
 🏗️ Project Structure
-text
+```text
 index.html          # Main game interface
 styles/            # CSS stylesheets
 scripts/           # Game logic and comparison engine
 challenges/        # Challenge definitions and assets
 assets/           # Images, icons, and other resources
+```
 🔧 Quick Start
 Clone the repository:
 
-bash
+```bash
 git clone https://github.com/yourusername/css-match-challenge.git
+```
 Open index.html in your browser:
 
-bash
+```bash
 # Using Python
 python -m http.server 8000
 
 # Or simply double-click index.html
+```
 Start playing immediately!
 
 🎯 Challenge Types
