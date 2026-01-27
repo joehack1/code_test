@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Match Challenge | Code Comparison Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>CSS Match Challenge</h1>
+                    <p>Test your HTML/CSS skills with precision</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-value">87%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">24</span>
+                        <span class="stat-label">Level</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">1,245</span>
+                        <span class="stat-label">Score</span>
+                    </div>
+                </div>
+                <div class="profile">
+                    <div class="profile-img">JD</div>
+                    <span>John Developer</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Game Header -->
+        <section class="game-header">
+            <div class="challenge-info">
+                <h2>Challenge #24: Card Component <span class="difficulty">INTERMEDIATE</span></h2>
+                <p class="challenge-desc">
+                    Recreate the card component shown in the preview. Pay attention to spacing, colors, and hover effects.
+                    Your solution will be compared pixel-perfect against the target output.
+                </p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <!-- Target Output Panel -->
+            <section class="panel target-output">
+                <div class="panel-header">
+                    <h3><i class="fas fa-bullseye panel-icon"></i> Target Output</h3>
+                    <div class="panel-actions">
+                        <button class="btn-icon" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+                        <button class="btn-icon" title="Reset View"><i class="fas fa-expand-alt"></i></button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="output-preview">
+                        <!-- Example card that users need to recreate -->
+                        <div style="
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            border-radius: 16px;
+                            padding: 30px;
+                            color: white;
+                            max-width: 400px;
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                            font-family: sans-serif;
+                        ">
+                            <h3 style="font-size: 24px; margin-bottom: 15px;">Modern UI Card</h3>
+                            <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px; line-height: 1.6;">
+                                This is an example of the card component you need to recreate. Notice the gradient background, subtle shadow, and typography.
+                            </p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.7);">Challenge #24</span>
+                                <button style="
+                                    background: white;
+                                    color: #667eea;
+                                    border: none;
+                                    padding: 10px 25px;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: transform 0.3s;
+                                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                                    Get Started
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Your Output Panel -->
+            <section class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-desktop panel-icon"></i> Your Output Preview</h3>
+                    <div class="panel-actions">
+                        <button class="btn-icon" title="Refresh"><i class="fas fa-redo"></i></button>
+                        <button class="btn-icon" title="Fullscreen"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="output-preview">
+                        <!-- User's output will appear here -->
+                        <iframe id="userOutputFrame" title="User Output"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Editor Panel -->
+            <section class="panel code-editor">
+                <div class="panel-header">
+                    <h3><i class="fas fa-code panel-icon"></i> Code Editor</h3>
+                    <div class="panel-actions">
+                        <button class="btn-icon" title="Format Code"><i class="fas fa-align-left"></i></button>
+                        <button class="btn-icon" title="Reset Code"><i class="fas fa-undo"></i></button>
+                        <button class="btn-icon" title="Show Hint"><i class="fas fa-lightbulb"></i></button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-tabs">
+                                <button class="editor-tab active">index.html</button>
+                                <button class="editor-tab">style.css</button>
+                            </div>
+                            <div style="color: var(--text-muted); font-size: 14px;">
+                                <i class="fas fa-keyboard"></i> HTML/CSS
+                            </div>
+                        </div>
+                        <div class="code-area" contenteditable="true">
+&lt;!-- Write your HTML/CSS here --&gt;
+&lt;div class="card"&gt;
+  &lt;h3&gt;Modern UI Card&lt;/h3&gt;
+  &lt;p&gt;Recreate this card component with matching styles.&lt;/p&gt;
+  &lt;div class="card-footer"&gt;
+    &lt;span&gt;Challenge #24&lt;/span&gt;
+    &lt;button&gt;Get Started&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.card {
+  /* Your CSS code here */
+}
+&lt;/style&gt;
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Results -->
+            <section class="panel comparison-result">
+                <div class="panel-header">
+                    <h3><i class="fas fa-chart-bar panel-icon"></i> Comparison Results</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="result-header">
+                        <div class="accuracy-display">
+                            <div class="accuracy-circle">
+                                <div class="accuracy-inner">75%</div>
+                            </div>
+                            <div class="accuracy-text">
+                                <h4>Match Accuracy</h4>
+                                <p>Your code is 75% similar to the target output</p>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-redo"></i> Try Again
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i> Test My Code
+                            </button>
+                        </div>
+                    </div>
+                    <div class="diff-view">
+                        <div class="diff-header">
+                            <i class="fas fa-file-code"></i> Differences Found (3 issues):
+                        </div>
+                        <div class="diff-lines">
+                            <div><span class="diff-added">+ background: linear-gradient(...);</span> (Missing)</div>
+                            <div><span class="diff-removed">- border-radius: 12px;</span> (Should be 16px)</div>
+                            <div><span class="diff-removed">- padding: 20px;</span> (Should be 30px)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>CSS Match Challenge &copy; 2024 | Practice your frontend skills with precision matching</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Documentation</a>
+                <a href="#"><i class="fas fa-trophy"></i> Leaderboard</a>
+                <a href="#"><i class="fas fa-layer-group"></i> Challenges</a>
+                <a href="#"><i class="fas fa-users"></i> Community</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/game.js" defer></script>
+</body>
+</html>
