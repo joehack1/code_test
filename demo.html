@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Match Challenge | Code Comparison Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #0f172a;
+            --bg-darker: #0a0f1c;
+            --bg-card: #1e293b;
+            --bg-code: #1a2332;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.5);
+            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-darker);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: var(--gradient);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 15px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            min-width: 80px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: var(--bg-card);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile:hover {
+            background: var(--border);
+        }
+
+        .profile-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Game Area */
+        .game-area {
+            padding: 30px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .game-header {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .challenge-info h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .difficulty {
+            background: var(--warning);
+            color: var(--bg-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .challenge-desc {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            background: var(--bg-code);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            background: var(--gradient);
+            height: 100%;
+            width: 65%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .panel-header {
+            background: var(--bg-darker);
+            padding: 18px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-icon {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .panel-content {
+            padding: 25px;
+        }
+
+        /* Target Output */
+        .target-output {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .output-preview {
+            background: white;
+            border-radius: 10px;
+            height: 100%;
+            overflow: auto;
+            padding: 20px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Code Editor */
+        .code-editor {
+            grid-column: 1 / -1;
+            height: 350px;
+        }
+
+        .editor-container {
+            background: var(--bg-code);
+            border-radius: 10px;
+            height: 100%;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .editor-header {
+            background: var(--bg-darker);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .editor-tabs {
+            display: flex;
+            gap: 5px;
+        }
+
+        .editor-tab {
+            padding: 8px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .editor-tab.active {
+            background: var(--bg-code);
+            color: var(--text);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .code-area {
+            height: calc(100% - 60px);
+            padding: 20px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre;
+            overflow: auto;
+            background: var(--bg-code);
+        }
+
+        /* Comparison Result */
+        .comparison-result {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .accuracy-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .accuracy-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 75%, var(--bg-code) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .accuracy-inner {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .accuracy-text h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .accuracy-text p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-code);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .diff-view {
+            background: var(--bg-code);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .diff-header {
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .diff-lines {
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .diff-added {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .diff-removed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            padding: 30px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .stats {
+                gap: 10px;
+            }
+            
+            .stat-item {
+                min-width: 70px;
+                padding: 8px 10px;
+            }
+            
+            .result-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>CSS Match Challenge</h1>
+                    <p>Test your HTML/CSS skills with precision</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-value">87%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">24</span>
+                        <span class="stat-label">Level</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">1,245</span>
+                        <span class="stat-label">Score</span>
+                    </div>
+                </div>
+                <div class="profile">
+                    <div class="profile-img">JD</div>
+                    <span>John Developer</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Game Header -->
+        <section class="game-header">
+            <div class="challenge-info">
+                <h2>Challenge #24: Card Component <span class="difficulty">INTERMEDIATE</span></h2>
+                <p class="challenge-desc">
+                    Recreate the card component shown in the preview. Pay attention to spacing, colors, and hover effects.
+                    Your solution will be compared pixel-perfect against the target output.
+                </p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <!-- Target Output Panel -->
+            <section class="panel target-output">
+                <div class="panel-header">
+                    <h3><i class="fas fa-bullseye panel-icon"></i> Target Output</h3>
+                    <div class="panel-actions">
+                        <button class="btn-icon" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+                        <button class="btn-icon" title="Reset View"><i class="fas fa-expand-alt"></i></button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="output-preview">
+                        <!-- Example card that users need to recreate -->
+                        <div style="
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            border-radius: 16px;
+                            padding: 30px;
+                            color: white;
+                            max-width: 400px;
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                            font-family: sans-serif;
+                        ">
+                            <h3 style="font-size: 24px; margin-bottom: 15px;">Modern UI Card</h3>
+                            <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px; line-height: 1.6;">
+                                This is an example of the card component you need to recreate. Notice the gradient background, subtle shadow, and typography.
+                            </p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.7);">Challenge #24</span>
+                                <button style="
+                                    background: white;
+                                    color: #667eea;
+                                    border: none;
+                                    padding: 10px 25px;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: transform 0.3s;
+                                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                                    Get Started
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Your Output Panel -->
+            <section class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-desktop panel-icon"></i> Your Output Preview</h3>
+                    <div class="panel-actions">
+                        <button class="btn-icon" title="Refresh"><i class="fas fa-redo"></i></button>
+                        <button class="btn-icon" title="Fullscreen"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="output-preview">
+                        <!-- User's output will appear here -->
+                        <div id="userOutput" style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-code" style="font-size: 48px; margin-bottom: 15px; color: var(--border);"></i>
+                                <p>Your HTML/CSS output will appear here</p>
+                                <p style="font-size: 14px; margin-top: 10px;">Write code in the editor below</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Editor Panel -->
+            <section class="panel code-editor">
+                <div class="panel-header">
+                    <h3><i class="fas fa-code panel-icon"></i> Code Editor</h3>
+                    <div class="panel-actions">
+                        <button class="btn-icon" title="Format Code"><i class="fas fa-align-left"></i></button>
+                        <button class="btn-icon" title="Reset Code"><i class="fas fa-undo"></i></button>
+                        <button class="btn-icon" title="Show Hint"><i class="fas fa-lightbulb"></i></button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <div class="editor-tabs">
+                                <button class="editor-tab active">index.html</button>
+                                <button class="editor-tab">style.css</button>
+                            </div>
+                            <div style="color: var(--text-muted); font-size: 14px;">
+                                <i class="fas fa-keyboard"></i> HTML/CSS
+                            </div>
+                        </div>
+                        <div class="code-area" contenteditable="true">
+&lt;!-- Write your HTML/CSS here --&gt;
+&lt;div class="card"&gt;
+  &lt;h3&gt;Modern UI Card&lt;/h3&gt;
+  &lt;p&gt;Recreate this card component with matching styles.&lt;/p&gt;
+  &lt;div class="card-footer"&gt;
+    &lt;span&gt;Challenge #24&lt;/span&gt;
+    &lt;button&gt;Get Started&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.card {
+  /* Your CSS code here */
+}
+&lt;/style&gt;
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Results -->
+            <section class="panel comparison-result">
+                <div class="panel-header">
+                    <h3><i class="fas fa-chart-bar panel-icon"></i> Comparison Results</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="result-header">
+                        <div class="accuracy-display">
+                            <div class="accuracy-circle">
+                                <div class="accuracy-inner">75%</div>
+                            </div>
+                            <div class="accuracy-text">
+                                <h4>Match Accuracy</h4>
+                                <p>Your code is 75% similar to the target output</p>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-redo"></i> Try Again
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i> Test My Code
+                            </button>
+                        </div>
+                    </div>
+                    <div class="diff-view">
+                        <div class="diff-header">
+                            <i class="fas fa-file-code"></i> Differences Found (3 issues):
+                        </div>
+                        <div class="diff-lines">
+                            <div><span class="diff-added">+ background: linear-gradient(...);</span> (Missing)</div>
+                            <div><span class="diff-removed">- border-radius: 12px;</span> (Should be 16px)</div>
+                            <div><span class="diff-removed">- padding: 20px;</span> (Should be 30px)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>CSS Match Challenge &copy; 2024 | Practice your frontend skills with precision matching</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Documentation</a>
+                <a href="#"><i class="fas fa-trophy"></i> Leaderboard</a>
+                <a href="#"><i class="fas fa-layer-group"></i> Challenges</a>
+                <a href="#"><i class="fas fa-users"></i> Community</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple demo functionality
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const accuracy = document.querySelector('.accuracy-inner');
+            const circle = document.querySelector('.accuracy-circle');
+            const diffLines = document.querySelector('.diff-lines');
+            
+            // Simulate testing
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testing...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                // Random accuracy between 70-95%
+                const newAccuracy = 70 + Math.floor(Math.random() * 26);
+                accuracy.textContent = newAccuracy + '%';
+                
+                // Update circle gradient
+                circle.style.background = `conic-gradient(var(--primary) ${newAccuracy}%, var(--bg-code) 0)`;
+                
+                // Update diff lines
+                diffLines.innerHTML = `
+                    <div><span class="diff-added">+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</span> (Missing)</div>
+                    <div><span class="diff-removed">- border-radius: 12px;</span> (Should be 16px)</div>
+                    <div><span class="diff-added">+ box-shadow: 0 20px 40px rgba(0,0,0,0.1);</span> (Missing)</div>
+                `;
+                
+                // Reset button
+                this.innerHTML = '<i class="fas fa-play"></i> Test My Code';
+                this.disabled = false;
+                
+                // Show confetti if high score
+                if (newAccuracy > 90) {
+                    showConfetti();
+                }
+            }, 1500);
+        });
+        
+        function showConfetti() {
+            // Simple confetti effect
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.top = '0';
+            confetti.style.left = '0';
+            confetti.style.width = '100%';
+            confetti.style.height = '100%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            
+            for (let i = 0; i < 150; i++) {
+                const dot = document.createElement('div');
+                dot.style.position = 'absolute';
+                dot.style.width = '10px';
+                dot.style.height = '10px';
+                dot.style.background = ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b'][Math.floor(Math.random() * 4)];
+                dot.style.borderRadius = '50%';
+                dot.style.left = Math.random() * 100 + 'vw';
+                dot.style.top = '-20px';
+                dot.style.animation = `fall ${1 + Math.random() * 2}s linear forwards`;
+                confetti.appendChild(dot);
+            }
+            
+            document.body.appendChild(confetti);
+            
+            // Add CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fall {
+                    to {
+                        transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.editor-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Code editor interaction
+        const codeArea = document.querySelector('.code-area');
+        codeArea.addEventListener('focus', function() {
+            this.style.outline = '2px solid var(--primary)';
+            this.style.outlineOffset = '2px';
+        });
+        
+        codeArea.addEventListener('blur', function() {
+            this.style.outline = 'none';
+        });
+    </script>
+</body>
+</html>
