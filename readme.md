@@ -1,5 +1,6 @@
 CSS Match Challenge 🎯
 A precision-based HTML/CSS comparison game that tests your frontend skills by matching target outputs pixel-perfect.
+perfect coding game 
 
 🚀 Features
 Code Comparison: Write HTML/CSS to match target designs with accuracy scoring
